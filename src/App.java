@@ -2,13 +2,18 @@
 import Bai_1.Phan_So;
 import Bai_2.Diem2D;
 import Bai_2.Diem3D;
+import Bai_4_BTVN.NhanVien;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Scanner;
 
 public class App {
     public static void main(String[] args)
     {
-        Bai_2();
+        
     }
 
     private static void Bai_1() {
@@ -74,6 +79,51 @@ public class App {
         for (Diem2D d : danh_sach_diem) {
             System.out.println(d);
         }
+    }
+
+
+    static void Bai_4_BTVN()
+    {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Nhập số lượng nhân viên: ");
+        int n = sc.nextInt();
+
+        NhanVien[] ds = new NhanVien[n];
+
+        // Nhập danh sách nhân viên
+        for (int i = 0; i < n; i++) {
+            System.out.println("\nNhân viên thứ " + (i + 1));
+            ds[i] = new NhanVien();
+            ds[i].Nhap(sc);
+        }
+
+        // Tìm nhân viên có số năm công tác lớn nhất
+        NhanVien max = ds[0];
+        for (int i = 1; i < n; i++) {
+            if (ds[i].getSnct() > max.getSnct()) {
+                max = ds[i];
+            }
+        }
+
+        System.out.println("\n===== Nhân viên có số năm công tác nhiều nhất =====");
+        max.Xuat();
+
+        // Sắp xếp theo lương giảm dần
+        Arrays.sort(ds, new Comparator<NhanVien>() {
+            @Override
+            public int compare(NhanVien nv1, NhanVien nv2) {
+                return Double.compare(nv2.tinhLuong(), nv1.tinhLuong());
+            }
+        });
+
+        System.out.println("\n===== Danh sách nhân viên theo lương giảm dần =====");
+        for (NhanVien nv : ds) {
+            nv.Xuat();
+            System.out.println("--------------------");
+        }
+
+        sc.close();
     }
 
 }
